@@ -71,6 +71,21 @@ app.get('/notify', function(req, res) {
 	}); 
 });
 
+//
+// Lorsqu'on passe en production, le client a été compilé et peut désormais 
+// être servi de manière statique par node.js
+//
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+    
+  // Handle React routing, return all requests to React app
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
+
+
 var server = app.listen(process.env.PORT || 5000, function() {
 	var host = server.address().address
 	var port = server.address().port
