@@ -43,8 +43,6 @@ var express = require('express');
 var app = express();
 
 
-app.use(express.static('public'));
-
 app.get('/allTasks', function(req, res) {
 
 	pool.execute('select * from Task', function(err, results, fields) {
@@ -77,6 +75,7 @@ app.get('/notify', function(req, res) {
 // être servi de manière statique par node.js
 // (pour rappel : compilation avec 'npm run build' dans /client/
 //
+
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));

@@ -1,4 +1,5 @@
 import React from 'react';
+import Task from './Task';
 import './TaskList.css';
 
 class TaskList extends React.Component {
@@ -13,11 +14,10 @@ class TaskList extends React.Component {
 	}
 	
 	componentDidMount() {
-		/*fetch('/allTasks')
+		fetch('/allTasks')
 		.then( res => res.json())
 		.then(
 			(result) => {
-				console.log(result);
 				this.setState({
 					isLoaded: true,
 					items: result
@@ -29,15 +29,15 @@ class TaskList extends React.Component {
 					error
 				});
 			}
-		);*/
+		);
 	}
 	
 	render() {
 		const { error, isLoaded, items } = this.state;
 		if (error) {
 			return (
-				<div class="ui negative message">
-					<div class="header">
+				<div className="ui negative message">
+					<div className="header">
 						Chargement des tâches depuis la base de données
 					</div>
 					<p>Le serveur a renvoyé une erreur</p>
@@ -49,13 +49,11 @@ class TaskList extends React.Component {
 			);
 		} else {
 			return (
-				<ul>
-				  {items.map(item => (
-					<li key={item.id}>
-					  {item.description} {item.date}
-					</li>
-				  ))}
-				</ul>
+				<div className="ui relaxed divided list">
+					{items.map(item => (
+						<Task key={item.id} description={item.description} date={item.date} />
+					))}
+				</div>
 			);
 		}
 	}
