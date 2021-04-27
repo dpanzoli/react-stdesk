@@ -75,6 +75,7 @@ app.get('/notify', function(req, res) {
 //
 // Lorsqu'on passe en production, le client a été compilé et peut désormais 
 // être servi de manière statique par node.js
+// (pour rappel : compilation avec 'npm run build' dans /client/
 //
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files

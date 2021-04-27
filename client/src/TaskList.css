@@ -1,0 +1,8 @@
+#loading {
+	background-image: url(spinner.gif);
+	background-size: 30px;
+	background-repeat: no-repeat;
+	height: 32px;
+	padding-left: 40px;
+	padding-top: 4px;
+}
