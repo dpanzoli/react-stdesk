@@ -1,0 +1,138 @@
+tasks = [
+	{
+		id: 0,
+		date: '2021-04-28',
+		titre: 'Commission promotion PRAGS ST classe exceptionnelle',
+		desc : [
+			{ 
+				text: "Rédiger un avis littéral sur chaque dossier",
+				isSubtask: true,
+				checked: 'checked'
+			},
+			"Réunion sans doute annulée ou remplacée par entretien avec la directrice"
+		],
+		type: ['personnel'],
+		complete: true
+	},
+	{
+		id: 1,
+		date: '2021-04-29',
+		titre: 'Réunion GT Vacataires à 14h',
+		type: ['services'],
+		retard: true
+	},
+	{
+		id: 2,
+		date: '2021-04-30',
+		titre: "Remontées campagne d'emploi titulaires BIATSS 2022-2023",
+		desc: [
+			"Florence m'a envoyé les documents de son mandat",
+			{
+				isSubtask: true,
+				text: "Consigne : Proposer au département de partir sur le classement établi l'année dernière sans revote, au prétexte que plan pluriannuel et pas le temps de faire un nouveau vote.\n1. BAP ? (Jenny) 2. IGE SGRL 3. IGE/R? SV"
+			},
+			"Dans la pratique, Francis part en retraite, son poste est attribué à Jenny sur concours\nLe poste de Jenny (CDI) est mis au recrutement ST d'un nouveau tech, d'abord en CDD puis en CDI après une période de validation."
+		],
+		type: ['formation'],
+		retard: true
+		
+	},
+	{ 
+		id: 3,
+		date: '2021-04-30',
+		titre: "Remonter fiche de poste BIATSS bap B TCH Physique/Chimie",
+		desc: [
+			"J'attends des nouvelles de Laurent pour monter un comité",
+			"Sylvie m'a envoyé une liste de tâches que je dois intégrer",
+			"J'aimerai appeler la présidente de la commission pour éclaircir la position de ST : pas de chimiste si c'est pas Jenny !!!"
+		],
+		type: ['personnel']
+	},
+	{
+		id: 4,
+		date: '2021-05-04',
+		titre: "Remontée des encadrements spécifiques des mentions de ST",
+		desc: [
+			"Coralie a prévenu les responsables de mention. Je dois être en copie des remontées."
+		],
+		type: ['formation']
+	},
+	{
+		id: 5,
+		date: '2021-05-04',
+		titre: "Réunion GT Relations Internationales à 14h",
+		desc: [
+			"C'est Bruno Caillier qui représente ST."
+		],
+		type: ['services']
+	},
+	{
+		id: 6,
+		date: '2021-05-05',
+		titre: "Réunion tutorat à 18h",
+		desc: [
+			"Dépôt des tableaux de suivi. Relancer les responsables tutorat des mentions licences ST"
+		],
+		type: ['formation']
+	},
+	{
+		id: 7,
+		date: '2021-05-06',
+		titre: "Clôture candidature direction département",
+		type: ['vie ST']
+	},
+	{
+		id: 8,
+		date: '2021-05-07',
+		titre: "Budget Rectificatif 1",
+		desc: [
+			"Ma responsabilité concerne uniquement la ligne 905-EB1 qui concerne LG+LP+AMINJ (hors LP de Rodez qui sont sur 905-EB2)."
+		],
+		type: ['budget']
+	},
+	{
+		id: 9,
+		date: '2021-05-12',
+		titre: "Réunion GT Indicateurs RH à 10h",
+		desc: [
+			"Récupérer lien zoom"
+		],
+		type: ['services', 'postes']
+	},
+	{
+		id: 10,
+		date: '2021-05-20',
+		titre: "CFVU à 14h",
+		desc: [
+			"Remonter demande sécurisation parking en CFVU"
+		],
+		type: ['vie ST']
+	},
+	{
+		id: 11,
+		date: '2021-05-20',
+		titre: "Conseil ST",
+		desc: [
+			"Élections"
+		],
+		type: ['vie ST']
+	},
+	{
+		id: 12,
+		titre: 'Elsa Ibanez chantier CC',
+		type: ['formation']
+	},
+	{
+		id: 13,
+		titre: 'Mise en place de la cellule TROMBONE',
+		type: ['vie ST', 'services']
+	},
+	{
+		id: 14,
+		titre: 'Conseil de département',
+		desc: [
+			"Faire remonter les problèmes de la rentrée 2020 car celle de 2021 va sans doute être identique (à moins d'être très optimiste)\nRéflexion sur la rentrée à 50% Comment on s'organise ? Demander un retour d'expérience à Thierry"
+		],
+		type: ['vie ST']
+	}
+]

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>ST Desk</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" ></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+</head>
+<style>
+.ui.container {
+	margin-top: 15px;
+	background-color: #eee;
+}
+#tasklist {
+
+}
+#tasklist .segment {
+	cursor: pointer;
+}
+#tasklist .ui.tag.labels {
+	display: inline-block;
+}
+
+#taskdetails {
+
+}
+
+.nodate {
+	margin-right: 10px;
+	width: 50px;
+	height: 50px;
+	background-image: url('todo.png');
+}
+.caldate {
+	margin-right: 10px;
+	width: 50px;
+	height: 53px;
+	background-image: url('calendar.png');
+}
+.caldate span {
+	display: block;
+	position: absolute;
+	width: 50px;
+	text-align: center;
+}
+
+.caldate .day {
+	font-size: 30px;
+	padding-top: 24px;
+}
+
+.caldate .month {
+	font-size: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: white;
+	padding-top: 2px;
+}
+
+.overdue {
+	color: red;
+	font-weight: bold;	
+}
+
+#taskdetails .extra .control {
+	visibility: hidden;
+}
+
+#taskdetails .extra .control.shown {
+	visibility: visible;
+}
+
+</style>
+<script src="mockup_data.json"></script>
+<body class="ui container" ng-app="myApp" ng-controller="myCtrl">
+	
+	
+	<h2 class="ui header">ST Desk</h2>
+	
+	<div class="ui two column grid">
+	
+		<div class="column">
+		<div id='tasklist' class="ui items" ng->
+			<div class="ui item" ng-repeat="task in tasks">
+				<div class="nodate" ng-hide="task.date"></div>
+				<div class="caldate" ng-show="task.date">
+					<span class="month">
+						{{task.date | date : 'MMM'}}
+					</span>
+					<span class="day">
+						{{task.date | date : 'd'}}
+					</span>
+				</div>
+				<div class="content">
+				<div class="ui segment" ng-class="task.selected" ng-click="displayTask(task.id)">
+					<h3 class="header">{{task.titre}}</h3>
+					<div class="description">
+						<p></p>
+					</div>
+					<div class="extra">
+						<div class="ui tag labels">
+							<a class="ui label" ng-repeat="t in task.type">
+								{{ t }}						
+							</a>
+						</div>
+						<div class="ui red basic label" ng-if="task.retard">
+							<i class="exclamation icon"></i>En retard
+						</div>
+						<div class="ui green basic label" ng-if="task.complete">
+							<i class="check icon"></i>Complété
+						</div>
+					</div>
+					<div class="ui bottom attached progress" ng-if="!task.selected">
+						<div class="bar"></div>
+					</div>
+				</div>
+				</div>
+
+			</div>
+		</div>
+		</div>
+		
+		<!-- Séparateur colonnes -->
+		
+		<div class="column">
+		<div id='taskdetails' class="ui piled segment" ng-if="selectedTask!=-1">
+			<h4>Détail de la tâche</h4>
+			<div class="ui progress">
+				<div class="bar">
+					<div class="progress"></div>
+				</div>
+				<div class="label">1/10 complété(s)</div>
+			</div>
+			<div class="ui divided items">
+				<div class="item" ng-repeat="m in tasks[selectedTask].desc"
+				ng-mouseover="aff='shown'" ng-mouseleave="aff=''">
+					<div class="content">
+						<div class="ui checkbox" ng-if="m.isSubtask">
+							<input type="checkbox" name="example" ng-checked="m.checked">
+							<label>{{ m.text }}</label>
+						</div>
+						<div ng-if="!m.isSubtask">
+							{{ m }}
+						</div>
+						<div class="extra">
+							Le 1 avril 2021	par D. Panzoli
+							<span class="control" ng-class="aff">
+								&nbsp;&mdash;&nbsp;					
+								<a><i class="edit icon"></i>Modifier</a>
+								<a><i class="delete icon"></i>Supprimer</a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+			<button class="ui labeled icon button">
+				<i class="add icon"></i>
+					Commenter
+				</button>
+				
+			</div>
+		</div>
+		</div>
+
+</body>
+<script>
+
+	var months = [ '', 'jan', 'fev', 'mar', 'apr', 'mai', 'jun', 'jui', 'aou', 'sep', 'oct', 'nov', 'dec'
+	]
+	
+	var stickers = {
+		'formation': 'orange'
+	}
+
+	var app = angular.module('myApp', []);
+	
+	app.controller('myCtrl', function($scope) {
+		$scope.tasks = tasks;
+		$scope.selectedTask = -1;
+		
+		$scope.displayTask = function(t) {
+			try {
+				$scope.tasks[$scope.selectedTask].selected = '';
+			} catch (error) {}
+			$scope.selectedTask = t;
+			$scope.tasks[$scope.selectedTask].selected = 'blue raised';
+			
+		}
+		
+	});
+
+</script>
+</html>
