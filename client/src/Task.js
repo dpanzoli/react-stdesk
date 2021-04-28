@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment'
+import 'moment/locale/fr'
 import './Task.css';
 
 class Task extends React.Component {
@@ -6,21 +8,68 @@ class Task extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			overdue: false
+			overdue: true
 		};
 	}
 	
-	componentDidMount() {
-		
-	}
+	componentDidMount() {}
 	
 	render() {
+		// Icône devant la fiche
+		let icon;
+		if (!this.props.date) {
+			icon = <div className="nodate"></div>;
+		} else {
+			icon = <div className="caldate">
+					<span className="month">
+						{moment(this.props.date).format('MMM')}
+					</span>
+					<span className="day">
+						{moment(this.props.date).format('Do')}
+					</span>
+				</div>;
+		}
+		// Tâche complète
+		let complete;
+		if (this.props.complete) {
+			complete =	<div className="ui green basic label">
+							<i className="check icon"></i>Complété
+						</div>;
+		}
+		// Tâche en retard
+		let late;
+		if (!this.state.overdue) {
+			late =	<div className="ui red basic label">
+						<i className="exclamation icon"></i>En retard
+					</div>;
+		}
+		
+		// Composition de la vue
+		
 		return (
-			<div className="item">
-				<img className="ui avatar image" src="task.png"></img>
+			<div className="ui item">
+				{icon}
 				<div className="content">
-					<a className="header">{this.props.description}</a>
-					<div className="description">{this.props.date}</div>
+				<div className="ui segment">
+					<h3 className="header">{this.props.titre}</h3>
+					<div className="description">
+						<p></p>
+					</div>
+					<div className="extra">
+						<div className="ui tag labels">
+							{this.props.categories.map(item => (
+								<span key={item.id} className="ui label">
+									{item.lib}
+								</span>
+							))}
+						</div>
+						{ complete }
+						{ late }
+					</div>
+					<div className="ui bottom attached progress">
+						<div className="bar"></div>
+					</div>
+				</div>
 				</div>
 			</div>
 		);

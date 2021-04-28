@@ -48,11 +48,14 @@ class TaskList extends React.Component {
 				<div id="loading">Chargement des données</div>
 			);
 		} else {
+			
 			return (
-				<div className="ui relaxed divided list">
-					{items.map(item => (
-						<Task key={item.id} description={item.description} date={item.date} />
-					))}
+				<div id='tasklist' className="ui items">
+				{ 
+					Object.entries(items).map(
+				([k, v]) =>  <Task key={k} titre={v.title} date={v.date} categories={v.categories} complete={v.complete}/>
+					)
+				}
 				</div>
 			);
 		}

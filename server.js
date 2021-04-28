@@ -45,11 +45,34 @@ var app = express();
 
 app.get('/allTasks', function(req, res) {
 
-	pool.execute('select * from Task', function(err, results, fields) {
+	pool.execute('SELECT \
+					Task.id AS id, \
+					Task.title AS title, \
+					Task.date AS date, \
+					Task.complete AS complete, \
+					Category.lib AS category, \
+					Category.id AS idCategory \
+					FROM Task, TaskCategory, Category \
+					WHERE Task.id = TaskCategory.id_task \
+					AND Category.id = TaskCategory.id_cat;',
+		function(err, results, fields) {
 		if (err) {
 			res.status(500);
 		}
-		res.json(results);
+		let rows = {};
+		results.forEach(r => {
+			if (!rows[r.id]) {
+				rows[r.id] = {
+					title : r.title,
+					date : r.date,
+					complete: r.complete,
+					categories: [ {id: r.idCategory, lib: r.category} ]
+				}
+			} else {
+				rows[r.id].categories.push({id: r.idCategory, lib: r.category});
+			}
+		});
+		res.json(rows);
 	});
 });
 
