@@ -9,8 +9,10 @@ class TaskList extends React.Component {
 		this.state = {
 			error: null,
 			isLoaded: false,
-			items: []
+			items: [],
+			selectedTask: -1
 		};
+		this.taskHasChanged = this.taskHasChanged.bind(this);
 	}
 	
 	componentDidMount() {
@@ -32,8 +34,8 @@ class TaskList extends React.Component {
 		);
 	}
 	
-	taskHasChanged() {
-		console.log("La tâche a changé");
+	taskHasChanged(id) {
+		this.setState({selectedTask: id});
 	}
 	
 	render() {
@@ -58,11 +60,13 @@ class TaskList extends React.Component {
 					Object.entries(items).map( ([k, v]) =>  
 						<Task 
 							key={k}
+							id={k}
 							titre={v.title}
 							date={v.date}
 							categories={v.categories}
 							complete={v.complete}
 							taskHasChanged={this.taskHasChanged}
+							selected={this.state.selectedTask==k}
 						/>
 					)
 				}

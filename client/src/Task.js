@@ -9,7 +9,6 @@ class Task extends React.Component {
 		super(props);
 		this.state = {
 			overdue: true,
-			selected: false
 		};
 		this.selectTask = this.selectTask.bind(this);
 	}
@@ -19,8 +18,7 @@ class Task extends React.Component {
 	
 	// Sélectionner la tâche au clic
 	selectTask() {
-		this.setState({ selected: true });
-		this.props.taskHasChanged();
+		this.props.taskHasChanged(this.props.id);
 	}
 	
 	render() {
@@ -59,7 +57,7 @@ class Task extends React.Component {
 			<div className="ui  item" onClick={this.selectTask}>
 				{icon}
 				<div className="content">
-				<div className={`ui segment ${this.state.selected?'blue raised':''}`} >
+				<div className={`ui segment ${this.props.selected?'blue raised':''}`} >
 					<h3 className="header">{this.props.titre}</h3>
 					<div className="description">
 						<p></p>
