@@ -1,5 +1,4 @@
 import React from 'react';
-import Task from './Task';
 import './TaskList.css';
 
 class TaskList extends React.Component {
@@ -39,8 +38,14 @@ class TaskList extends React.Component {
 								Le 1 avril 2021	par D. Panzoli
 								<span className="control">
 									&nbsp;&mdash;&nbsp;					
-									<a><i className="edit icon"></i>Modifier</a>
-									<a><i className="delete icon"></i>Supprimer</a>
+									<button className="ui compact basic icon button">
+										<i className="edit icon"></i>
+										Modifier
+									</button>
+									<button className="ui compact basic icon button">
+										<i className="delete icon"></i>
+										Supprimer
+									</button>
 								</span>
 							</div>
 						</div>

@@ -8,11 +8,20 @@ class Task extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			overdue: true
+			overdue: true,
+			selected: false
 		};
+		this.selectTask = this.selectTask.bind(this);
 	}
 	
-	componentDidMount() {}
+	componentDidMount() {
+	}
+	
+	// Sélectionner la tâche au clic
+	selectTask() {
+		this.setState({ selected: true });
+		this.props.taskHasChanged();
+	}
 	
 	render() {
 		// Icône devant la fiche
@@ -47,10 +56,10 @@ class Task extends React.Component {
 		// Composition de la vue
 		
 		return (
-			<div className="ui item">
+			<div className="ui  item" onClick={this.selectTask}>
 				{icon}
 				<div className="content">
-				<div className="ui segment">
+				<div className={`ui segment ${this.state.selected?'blue raised':''}`} >
 					<h3 className="header">{this.props.titre}</h3>
 					<div className="description">
 						<p></p>
@@ -74,6 +83,8 @@ class Task extends React.Component {
 			</div>
 		);
 	}
+	
+	
 }
 	
 export default Task;

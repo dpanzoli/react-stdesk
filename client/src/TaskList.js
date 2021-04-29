@@ -32,6 +32,10 @@ class TaskList extends React.Component {
 		);
 	}
 	
+	taskHasChanged() {
+		console.log("La tâche a changé");
+	}
+	
 	render() {
 		const { error, isLoaded, items } = this.state;
 		if (error) {
@@ -48,12 +52,18 @@ class TaskList extends React.Component {
 				<div id="loading">Chargement des données</div>
 			);
 		} else {
-			
 			return (
 				<div id='tasklist' className="ui items">
 				{ 
-					Object.entries(items).map(
-				([k, v]) =>  <Task key={k} titre={v.title} date={v.date} categories={v.categories} complete={v.complete}/>
+					Object.entries(items).map( ([k, v]) =>  
+						<Task 
+							key={k}
+							titre={v.title}
+							date={v.date}
+							categories={v.categories}
+							complete={v.complete}
+							taskHasChanged={this.taskHasChanged}
+						/>
 					)
 				}
 				</div>
