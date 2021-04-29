@@ -76,6 +76,17 @@ app.get('/allTasks', function(req, res) {
 	});
 });
 
+app.get('/allComments', function(req, res) {
+	console.log(req.query.taskid);
+	pool.execute('SELECT * FROM Comment WHERE id_task = ?;', [req.query.taskid],
+		function(err, results, fields) {
+		if (err) {
+			res.status(500);
+		}
+		res.json(results);
+	});
+});
+
 app.get('/notify', function(req, res) {
 
 	transporter.sendMail({

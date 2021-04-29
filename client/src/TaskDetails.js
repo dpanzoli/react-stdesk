@@ -1,23 +1,46 @@
 import React from 'react';
-import './TaskList.css';
+import Comment from './Comment';
+import './TaskDetails.css';
 
-class TaskList extends React.Component {
+class TaskDetails extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			what: 'not'
+			comments: []
 		};
+		this.clickAnywhere = this.clickAnywhere.bind(this);
 	}
 	
 	componentDidMount() {
-		
+		//fetch(`/allComments?taskid=${this.props.id}`)
+		//Relancer la requête chaque fois que this.props.id est mid à jour
+		fetch('/allComments?taskid=0')
+		.then( res => res.json())
+		.then((result) => {
+			this.setState({comments: result});
+		});
+	}
+	
+	clickAnywhere(e) {
+		e.stopPropagation();
+	}
+	
+	componentDidUpdate() {
+/*		fetch(`/allComments?taskid=${this.props.id}`)
+		.then( res => res.json())
+		.then((result) => {
+			this.setState({comments: result});
+		});
+*/
 	}
 	
 	render() {
+		console.log(this.state.comments);
+		if (this.props.id === -1) return ( <div></div> );
 		return (
-			<div id='taskdetails' className="ui piled segment" ng-if="selectedTask!=-1">
-				<h4>Détail de la tâche</h4>
+			<div id='taskdetails' className="ui piled segment" onClick={this.clickAnywhere}>
+				<h4>Détails de la tâche {this.props.id} </h4>
 				<div className="ui progress">
 					<div className="bar">
 						<div className="progress"></div>
@@ -25,31 +48,11 @@ class TaskList extends React.Component {
 					<div className="label">1/10 complété(s)</div>
 				</div>
 				<div className="ui divided items">
-					<div className="item">
-						<div className="content">
-							<div className="ui checkbox">
-								<input type="checkbox" name="example" />
-								<label></label>
-							</div>
-							<div>
-								Sous-tâche
-							</div>
-							<div className="extra">
-								Le 1 avril 2021	par D. Panzoli
-								<span className="control">
-									&nbsp;&mdash;&nbsp;					
-									<button className="ui compact basic icon button">
-										<i className="edit icon"></i>
-										Modifier
-									</button>
-									<button className="ui compact basic icon button">
-										<i className="delete icon"></i>
-										Supprimer
-									</button>
-								</span>
-							</div>
-						</div>
-					</div>
+				{
+					this.state.comments.map((item) => 
+						<Comment key={item.id} data={item} />
+					)
+				}
 				</div>
 				<div>
 				<button className="ui labeled icon button">
@@ -62,5 +65,5 @@ class TaskList extends React.Component {
 	}
 }
 	
-export default TaskList;
+export default TaskDetails;
 

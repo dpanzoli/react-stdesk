@@ -17,7 +17,8 @@ class Task extends React.Component {
 	}
 	
 	// Sélectionner la tâche au clic
-	selectTask() {
+	selectTask(e) {
+		e.stopPropagation();
 		this.props.taskHasChanged(this.props.id);
 	}
 	

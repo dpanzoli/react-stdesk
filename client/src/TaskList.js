@@ -10,9 +10,7 @@ class TaskList extends React.Component {
 			error: null,
 			isLoaded: false,
 			items: [],
-			selectedTask: -1
 		};
-		this.taskHasChanged = this.taskHasChanged.bind(this);
 	}
 	
 	componentDidMount() {
@@ -32,10 +30,6 @@ class TaskList extends React.Component {
 				});
 			}
 		);
-	}
-	
-	taskHasChanged(id) {
-		this.setState({selectedTask: id});
 	}
 	
 	render() {
@@ -65,8 +59,8 @@ class TaskList extends React.Component {
 							date={v.date}
 							categories={v.categories}
 							complete={v.complete}
-							taskHasChanged={this.taskHasChanged}
-							selected={this.state.selectedTask==k}
+							taskHasChanged={this.props.taskHasChanged}
+							selected={this.props.selectedTask===k}
 						/>
 					)
 				}
