@@ -1,3 +1,8 @@
 .App {
   font-size: 24px;
 }
+
+.ui.container {
+	margin-top: 15px;
+	background-color: #eee;
+}

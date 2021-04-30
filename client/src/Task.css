@@ -1,0 +1,31 @@
+.nodate {
+	margin-right: 10px;
+	width: 50px;
+	height: 50px;
+	background-image: url(todo.png);
+}
+.caldate {
+	margin-right: 10px;
+	width: 50px;
+	height: 53px;
+	background-image: url(calendar.png);
+}
+.caldate span {
+	display: block;
+	position: absolute;
+	width: 50px;
+	text-align: center;
+}
+
+.caldate .day {
+	font-size: 30px;
+	padding-top: 24px;
+}
+
+.caldate .month {
+	font-size: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: white;
+	padding-top: 2px;
+}
