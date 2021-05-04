@@ -7,7 +7,7 @@
     "client": "cd client && npm start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-	"start": "node server.js"
+    "start": "node server.js"
   },
   "author": "David Panzoli",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "http": "0.0.1-security",
     "mysql2": "^2.2.5",
-    "nodemailer": "^6.5.0"
+    "nodemailer": "^6.5.0",
+    "semantic-ui-react": "^2.0.3"
   }
 }

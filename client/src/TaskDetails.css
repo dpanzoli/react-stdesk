@@ -10,3 +10,20 @@
 #taskdetails .extra .control.shown {
 	visibility: visible;
 }
+
+.loading {
+	background-image: url(spinner.gif);
+	background-size: 30px;
+	background-repeat: no-repeat;
+	height: 32px;
+	padding-left: 40px;
+	padding-top: 4px;
+}
+
+.ui.loader.active {
+	width: 100%;
+}
+
+.ui.checkbox {
+	transform: scale(2);
+}

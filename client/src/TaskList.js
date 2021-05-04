@@ -45,7 +45,7 @@ class TaskList extends React.Component {
 			);
 		} else if (!isLoaded) {
 			return (
-				<div id="loading">Chargement des données</div>
+				<div className="ui active center inline large text loader">Chargement des tâches</div>
 			);
 		} else {
 			return (

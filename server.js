@@ -85,7 +85,7 @@ app.get('/allComments', function(req, res) {
 			}
 			res.json(results);
 		});
-	} else { res.json([]); }
+	} else { res.sendStatus(500); }
 });
 
 app.get('/notify', function(req, res) {

@@ -1,53 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment'
 import axios from 'axios';
+import { Progress, Checkbox } from 'semantic-ui-react'
 
 import 'moment/locale/fr';
 import './TaskDetails.css';
 
 function TaskDetails(props) {
 
-	const [data, setData] = useState({ 
-		comments: [],  
-		clickAnywhere: function(e) {
-			e.stopPropagation();	
-		}
-	});
-	const [url, setUrl] = useState('/allComments',);
-	
+	const [comments, setComments] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+	const [completion, setCompletion] = useState(25);
+
 	useEffect(() => {
-		const fetchData = async () => {
-			const result = await axios(url);
-			setData(result.data);
-		};
-		fetchData();
-	}, [url]);
-	
-	console.log(props);
-	
-	
-	return (
-		<button type="button" onClick={ () => setUrl(`/allComments?idTask=${props.id}`)} >Reload</button> 
-	);
-	
-	/*
+		setComments([]);
+		setIsLoading(true);
+		axios.get(`/allComments?idTask=${props.id}`)
+		.then((response) => {
+			setComments(response.data);
+			setIsLoading(false);
+		})
+		.catch(error => console.log(`Erreur : ${error}`));
+		
+	}, [props.id]);
+
 	if (props.id === -1) return ( <div></div> );
 	return (
-		<div id='taskdetails' className="ui piled segment" onClick={data.clickAnywhere}>
+		<div id='taskdetails' className="ui piled segment" onClick={(e) => e.stopPropagation()}>
 			<h4>Détails de la tâche {props.id} </h4>
-			<div className="ui progress">
-				<div className="bar">
-					<div className="progress"></div>
-				</div>
-				<div className="label">1/10 complété(s)</div>
-			</div>
-			<div className="ui divided items">
+			<Progress percent={completion} color='teal' label={`${completion}% completed`} />
 			{
-				data.comments.map((item) => 
-					<Comment key={item.id} commentData={item} />
-				)
+				isLoading?
+				<div className="ui active center inline loader"></div>:
+				<CommentList comments={comments}/>
 			}
-			</div>
 			<div>
 			<button className="ui labeled icon button">
 				<i className="add icon"></i>
@@ -55,22 +41,38 @@ function TaskDetails(props) {
 			</button>
 			</div>
 		</div>
-	);*/
+	);
+}
+
+function CommentList(props) {
+	return(
+		<div className="ui divided items">
+		{
+			props.comments.map((item) => 
+				<Comment key={item.id} commentData={item} />
+			)
+		}
+		</div>
+	);
 }
 
 function Comment(props) {
 
 	const [data, setData] = useState({  showControls: true });
 
-	return <h1>Commentaire</h1>;
-/*
+	let cb = '';
+	if (props.commentData.is_subtask) {
+		if (props.commentData.is_completed) {
+			cb = <Checkbox defaultChecked />;
+		} else {
+			cb = <Checkbox />;
+		}
+	}
+
 	return (
 		<div className="item">
 			<div className="content">
-				<div className="ui checkbox">
-					<input type="checkbox" name="example" />
-					<label>{props.commentData.is_subtask}</label>
-				</div>
+				{ cb}	
 				<div>
 					{props.commentData.comment}
 				</div>
@@ -79,11 +81,11 @@ function Comment(props) {
 					par {props.commentData.user}
 					<span className={`control ${data.showControls?'shown':''}`} >
 						&nbsp;&mdash;&nbsp;					
-							<button className="ui compact basic primary mini icon button">
+							<button className="ui compact basic mini icon button">
 							<i className="edit icon"></i>
 							Modifier
 						</button>
-						<button className="ui compact basic primary mini icon button">
+						<button className="ui compact basic mini icon button">
 							<i className="delete icon"></i>
 							Supprimer
 						</button>
@@ -92,7 +94,17 @@ function Comment(props) {
 			</div>
 		</div>
 	);
-*/
+}
+
+function Completion(props) {
+	return (
+		<div className="ui progress">
+			<div className="bar">
+				<div className="progress"></div>
+			</div>
+			<div className="label">1/10 complété(s)</div>
+		</div>
+	);
 }
 
 export default TaskDetails;
