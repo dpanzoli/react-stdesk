@@ -2,3 +2,11 @@
 
 }
 
+
+#taskdetails .extra .control {
+	visibility: hidden;
+}
+
+#taskdetails .extra .control.shown {
+	visibility: visible;
+}

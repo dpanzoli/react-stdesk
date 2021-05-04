@@ -1,69 +1,99 @@
-import React from 'react';
-import Comment from './Comment';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment'
+import axios from 'axios';
+
+import 'moment/locale/fr';
 import './TaskDetails.css';
 
-class TaskDetails extends React.Component {
+function TaskDetails(props) {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			comments: []
+	const [data, setData] = useState({ 
+		comments: [],  
+		clickAnywhere: function(e) {
+			e.stopPropagation();	
+		}
+	});
+	const [url, setUrl] = useState('/allComments',);
+	
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await axios(url);
+			setData(result.data);
 		};
-		this.clickAnywhere = this.clickAnywhere.bind(this);
-	}
+		fetchData();
+	}, [url]);
 	
-	componentDidMount() {
-		//fetch(`/allComments?taskid=${this.props.id}`)
-		//Relancer la requête chaque fois que this.props.id est mid à jour
-		fetch('/allComments?taskid=0')
-		.then( res => res.json())
-		.then((result) => {
-			this.setState({comments: result});
-		});
-	}
+	console.log(props);
 	
-	clickAnywhere(e) {
-		e.stopPropagation();
-	}
 	
-	componentDidUpdate() {
-/*		fetch(`/allComments?taskid=${this.props.id}`)
-		.then( res => res.json())
-		.then((result) => {
-			this.setState({comments: result});
-		});
-*/
-	}
+	return (
+		<button type="button" onClick={ () => setUrl(`/allComments?idTask=${props.id}`)} >Reload</button> 
+	);
 	
-	render() {
-		console.log(this.state.comments);
-		if (this.props.id === -1) return ( <div></div> );
-		return (
-			<div id='taskdetails' className="ui piled segment" onClick={this.clickAnywhere}>
-				<h4>Détails de la tâche {this.props.id} </h4>
-				<div className="ui progress">
-					<div className="bar">
-						<div className="progress"></div>
-					</div>
-					<div className="label">1/10 complété(s)</div>
+	/*
+	if (props.id === -1) return ( <div></div> );
+	return (
+		<div id='taskdetails' className="ui piled segment" onClick={data.clickAnywhere}>
+			<h4>Détails de la tâche {props.id} </h4>
+			<div className="ui progress">
+				<div className="bar">
+					<div className="progress"></div>
 				</div>
-				<div className="ui divided items">
-				{
-					this.state.comments.map((item) => 
-						<Comment key={item.id} data={item} />
-					)
-				}
+				<div className="label">1/10 complété(s)</div>
+			</div>
+			<div className="ui divided items">
+			{
+				data.comments.map((item) => 
+					<Comment key={item.id} commentData={item} />
+				)
+			}
+			</div>
+			<div>
+			<button className="ui labeled icon button">
+				<i className="add icon"></i>
+				Commenter
+			</button>
+			</div>
+		</div>
+	);*/
+}
+
+function Comment(props) {
+
+	const [data, setData] = useState({  showControls: true });
+
+	return <h1>Commentaire</h1>;
+/*
+	return (
+		<div className="item">
+			<div className="content">
+				<div className="ui checkbox">
+					<input type="checkbox" name="example" />
+					<label>{props.commentData.is_subtask}</label>
 				</div>
 				<div>
-				<button className="ui labeled icon button">
-					<i className="add icon"></i>
-					Commenter
-				</button>
+					{props.commentData.comment}
+				</div>
+				<div className="extra">
+					Le {moment(props.commentData.date).format('Do MMMM YYYY')}
+					par {props.commentData.user}
+					<span className={`control ${data.showControls?'shown':''}`} >
+						&nbsp;&mdash;&nbsp;					
+							<button className="ui compact basic primary mini icon button">
+							<i className="edit icon"></i>
+							Modifier
+						</button>
+						<button className="ui compact basic primary mini icon button">
+							<i className="delete icon"></i>
+							Supprimer
+						</button>
+					</span>
 				</div>
 			</div>
-		);
-	}
+		</div>
+	);
+*/
 }
-	
+
 export default TaskDetails;
 
