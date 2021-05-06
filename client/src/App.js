@@ -36,6 +36,7 @@ class App extends React.Component {
 					<div className="column">
 						<TaskDetails 
 							id={this.state.selectedTask}
+							requestRefresh={this.taskHasChanged}
 						/>
 					</div>
 				</div>

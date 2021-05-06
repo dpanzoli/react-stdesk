@@ -41,7 +41,8 @@ var transporter = nodemailer.createTransport({
 */
 var express = require('express');
 var app = express();
-
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );  
 
 app.get('/allTasks', function(req, res) {
 
@@ -86,6 +87,41 @@ app.get('/allComments', function(req, res) {
 			res.json(results);
 		});
 	} else { res.sendStatus(500); }
+});
+
+app.post('/sendComment', function(req, res) {
+	let date = '2021-05-06'
+	let user = 'D. Panzoli'
+	pool.execute('INSERT INTO Comment(user,date,comment,is_subtask,is_completed,id_task) VALUES (?, ?, ?, ?, ?,?);', [user, date, req.body.comment, req.body.isSubtask, false, req.body.idTask],
+	function(err, results, fields) {
+		if (err) {
+			console.log(err)
+			res.status(500);
+		}
+		res.json(results);
+	});
+});
+
+app.post('/deleteComment', function(req, res) {
+	pool.execute('DELETE FROM Comment WHERE id = ?;', [req.body.commentId],
+	function(err, results, fields) {
+		if (err) {
+			console.log(err)
+			res.status(500);
+		}
+		res.json(results);
+	});
+});
+
+app.post('/checkComment', function(req, res) {
+	pool.execute('UPDATE Comment SET is_completed=? WHERE id = ?;', [req.body.newChecked, req.body.idComment],
+	function(err, results, fields) {
+		if (err) {
+			console.log(err)
+			res.status(500);
+		}
+		res.json(results);
+	});
 });
 
 app.get('/notify', function(req, res) {

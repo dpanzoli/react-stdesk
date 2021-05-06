@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment'
 import 'moment/locale/fr'
 import './Task.css';
+import { Progress } from 'semantic-ui-react'
 
 class Task extends React.Component {
 
@@ -74,9 +75,8 @@ class Task extends React.Component {
 						{ complete }
 						{ late }
 					</div>
-					<div className="ui bottom attached progress">
-						<div className="bar"></div>
-					</div>
+					<Progress attached='bottom' value={2} total={5} indicating />
+					
 				</div>
 				</div>
 			</div>
