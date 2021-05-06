@@ -12,8 +12,23 @@
 <style>
 .ui.container {
 	margin-top: 15px;
-	background-color: #eee;
+		
 }
+#stdesk {
+	font-size: 60px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+#stdesk.white {
+	color: white;
+}
+#stdesk.black {
+	color: black;
+}
+
 #tasklist {
 
 }
@@ -78,7 +93,7 @@
 <body class="ui container" ng-app="myApp" ng-controller="myCtrl">
 	
 	
-	<h2 class="ui header">ST Desk</h2>
+	<h2 id="stdesk" class="ui header">ST Desk</h2>
 	
 	<div class="ui two column grid">
 	
@@ -169,12 +184,42 @@
 </body>
 <script>
 
-	var months = [ '', 'jan', 'fev', 'mar', 'apr', 'mai', 'jun', 'jui', 'aou', 'sep', 'oct', 'nov', 'dec'
-	]
+	// https://cssgradient.io/
+	var colors = [
+		[ 'rgba(249,213,130,1)', 'rgba(205,240,255,1)' ],
+		[ 'rgba(205,240,255,1)', 'rgba(255,175,195,1)' ],
+		[ 'rgba(238,174,202,1)', 'rgba(148,187,233,1)' ],
+		[ 'rgba(131,58,180,1)', 'rgba(253,29,29,1)', 'rgba(252,176,69,1)' ],
+		[ 'rgba(34,193,195,1)', 'rgba(253,187,45,1)' ]
+	];
+
+	var bg = localStorage.getItem('bg') || 0;
+	var fg = localStorage.getItem('fg') || 'white';
 	
-	var stickers = {
-		'formation': 'orange'
-	}
+	$('body').css('background','linear-gradient(90deg, '+colors[bg][0]+' 0%, '+colors[bg][1]+' 100%)');
+
+	$('#stdesk').addClass(fg);
+
+	$('#stdesk').dblclick(function(e) { 
+		e.stopPropagation();
+		if ($(this).hasClass('white')) {
+			localStorage.setItem('fg', 'black');
+		} else {
+			localStorage.setItem('fg', 'white');
+		}
+		$(this).toggleClass('white black');
+	});
+
+	$('body').dblclick(function() {
+		bg = (bg+1) % colors.length;
+		localStorage.setItem('bg', bg);
+		if (colors[bg].length == 2) {
+			$('body').css('background','linear-gradient(90deg, '+colors[bg][0]+' 0%, '+colors[bg][1]+' 100%)');
+
+		} else if (colors[bg].length == 3) {
+			$('body').css('background',`linear-gradient(90deg, ${colors[bg][0]} 0%, ${colors[bg][1]} 50%, ${colors[bg][2]} 100%)`);
+		}
+	});
 
 	var app = angular.module('myApp', []);
 	
