@@ -1,6 +1,7 @@
 import React from 'react';
 import Task from './Task';
 import './TaskList.css';
+import { Button, Menu, Checkbox } from 'semantic-ui-react'
 
 class TaskList extends React.Component {
 
@@ -49,6 +50,33 @@ class TaskList extends React.Component {
 			);
 		} else {
 			return (
+				<React.Fragment>
+				<div id="operations" className="ui form">
+				  <div className="inline fields">
+					<label>Afficher uniquement</label>
+					<div className="field">
+					  <div className="ui radio checkbox">
+						<input type="radio" name="filterTasks" checked="checked" />
+						<label>Toutes</label>
+					  </div>
+					</div>
+					<div className="field">
+					  <div className="ui radio checkbox">
+						<input type="radio" name="filterTasks" />
+						<label>Passées et urgentes</label>
+					  </div>
+					</div>
+					<div className="field">
+					  <div className="ui radio checkbox">
+						<input type="radio" name="filterTasks" />
+						<label>Sans date</label>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				
+				
+				
 				<div id='tasklist' className="ui items">
 				{ 
 					Object.entries(items).map( ([k, v]) =>  
@@ -65,6 +93,8 @@ class TaskList extends React.Component {
 					)
 				}
 				</div>
+				
+				</React.Fragment>
 			);
 		}
 	}

@@ -40,6 +40,12 @@ class App extends React.Component {
 						/>
 					</div>
 				</div>
+				<footer>
+					<button class="ui primary button labeled icon">
+						<i class="add icon"></i>			
+						Ajouter une tâche
+					</button>
+				</footer>
 			</React.Fragment>
 		);
 	}
